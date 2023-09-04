@@ -1,5 +1,5 @@
 # Define the link target.
-linkTarget = cpp-tracer
+linkTarget = executable
 
 # Define needed libraries.
 LIBS = -lSDL2
@@ -9,8 +9,8 @@ CFLAGS = -std=c++17
 
 # Define object files needed to use
 objects = main.o \
-		  CApp.o \
-		  $(patsubst %.cpp, %.o, $(wildcard ./cppTracer/*.cpp))	
+		  app.o \
+		  $(patsubst %.cpp, %.o, $(wildcard ./src/*.cpp))	
 
 # Define the rebuildable targets.
 rebuildables = $(objects) $(linkTarget)

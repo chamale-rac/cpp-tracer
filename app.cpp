@@ -1,14 +1,14 @@
-#include "CApp.h"
+#include "app.h"
 
 // Our constructor (default)
-CApp::CApp()
+App::App()
 {
     isRunning = true;
     pWindow = NULL;
     pRenderer = NULL;
 }
 
-bool CApp::OnInit()
+bool App::OnInit()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
@@ -21,6 +21,20 @@ bool CApp::OnInit()
     if (pWindow != NULL)
     {
         pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
+
+        // Initialize the image
+        m_image.Init(1280, 720, pRenderer);
+
+        // Create color variations.
+        for (int x = 0; x < 1280; ++x)
+        {
+            for (int y = 0; y < 720; ++y)
+            {
+                double red = (static_cast<double>(x) / 1280.0) * 255.0;
+                double green = (static_cast<double>(y) / 720.0) * 255.0;
+                m_image.SetPixel(x, y, red, green, 0.0);
+            }
+        }
     }
     else
     {
@@ -29,7 +43,7 @@ bool CApp::OnInit()
     return true;
 }
 
-int CApp::OnExecute()
+int App::OnExecute()
 {
     SDL_Event event;
 
@@ -51,7 +65,7 @@ int CApp::OnExecute()
     return 0;
 }
 
-void CApp::OnEvent(SDL_Event *event)
+void App::OnEvent(SDL_Event *event)
 {
     if (event->type == SDL_QUIT)
     {
@@ -59,21 +73,24 @@ void CApp::OnEvent(SDL_Event *event)
     }
 }
 
-void CApp::OnLoop()
+void App::OnLoop()
 {
 }
 
-void CApp::OnRender()
+void App::OnRender()
 {
     // Colorize
     SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
     SDL_RenderClear(pRenderer);
 
+    // Display the image.
+    m_image.Display(pRenderer);
+
     // Show the results
     SDL_RenderPresent(pRenderer);
 }
 
-void CApp::OnExit()
+void App::OnExit()
 {
     SDL_DestroyRenderer(pRenderer);
     SDL_DestroyWindow(pWindow);

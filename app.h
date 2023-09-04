@@ -1,12 +1,13 @@
-#ifndef CAPP_H
-#define CAPP_H
+#ifndef APP_H
+#define APP_H
 
 #include <SDL2/SDL.h>
+#include "./src/image.hpp"
 
-class CApp
+class App
 {
 public:
-    CApp();
+    App();
     int OnExecute();
     bool OnInit();
     void OnEvent(SDL_Event *event);
@@ -15,6 +16,8 @@ public:
     void OnExit();
 
 private:
+    // Image instance to store the image xd
+    Image m_image;
     // SDL2 stuff.
     bool isRunning;
     SDL_Window *pWindow;

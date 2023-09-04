@@ -1,8 +1,8 @@
-#include "CApp.h"
+#include "app.h"
 
 int main(int argc, char *argv[])
 {
-    CApp theApp;
+    App theApp;
 
     return theApp.OnExecute();
 }
