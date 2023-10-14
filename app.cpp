@@ -26,18 +26,6 @@ bool App::OnInit()
 
         // Initialize the image
         m_image.Init(1280, 720, pRenderer);
-
-        // Create color variations.
-        for (int x = 0; x < 1280; ++x)
-        {
-            for (int y = 0; y < 720; ++y)
-            {
-                // Gradient!
-                double red = (static_cast<double>(x) / 1280.0) * 255.0;
-                double green = (static_cast<double>(y) / 720.0) * 255.0;
-                m_image.SetPixel(x, y, red, green, 0.0);
-            }
-        }
     }
     else
     {
@@ -89,8 +77,11 @@ void App::OnRender()
     SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
     SDL_RenderClear(pRenderer);
 
+    // Render the scene.
+    m_scene.Render(m_image);
+
     // Display the image.
-    m_image.Display(pRenderer);
+    m_image.Display();
 
     // Show the results
     SDL_RenderPresent(pRenderer);

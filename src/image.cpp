@@ -1,5 +1,4 @@
 #include "image.hpp"
-#include <iostream>
 
 // Constructor (default)
 Image::Image()
@@ -46,7 +45,7 @@ void Image::SetPixel(const int x, const int y, const double red, const double gr
 }
 
 // Function to generate the display;
-void Image::Display(SDL_Renderer *renderer)
+void Image::Display()
 {
     // Alloc memory for the pixel buffer.
     Uint32 *temp_pixels = new Uint32[m_x_size * m_y_size];
@@ -80,6 +79,16 @@ void Image::Display(SDL_Renderer *renderer)
     SDL_RenderCopy(m_pRenderer, m_pTexture, &srcRect, &bounds);
 }
 
+int Image::GetXSize()
+{
+    return m_x_size;
+};
+
+int Image::GetYSize()
+{
+    return m_y_size;
+};
+
 // Function to init the texture.
 void Image::InitTexture()
 {
@@ -97,12 +106,6 @@ void Image::InitTexture()
     bmask = 0x0000ff00;
     amask = 0x000000ff;
 #endif
-
-    // Cout byte order.
-    std::cout << "Byte order: " << SDL_BYTEORDER << std::endl;
-    // Cout the big endian value.
-    std::cout << "Big endian: " << SDL_BIG_ENDIAN << std::endl;
-
     // Delete any previously created texture before we create a new one.
     if (m_pTexture != NULL)
         SDL_DestroyTexture(m_pTexture);

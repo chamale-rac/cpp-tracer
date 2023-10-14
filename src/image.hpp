@@ -21,7 +21,10 @@ public:
     void SetPixel(const int x, const int y, const double red, const double green, const double blue);
 
     // Display the image using the given renderer.
-    void Display(SDL_Renderer *renderer);
+    void Display();
+
+    int GetXSize();
+    int GetYSize();
 
 private:
     // Convert the given RGB color values to a Uint32 color value.
