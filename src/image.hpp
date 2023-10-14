@@ -43,7 +43,7 @@ private:
     int m_x_size;
     int m_y_size;
 
-    // SDL stuff.
+    // More SDL stuff.
     SDL_Renderer *m_pRenderer;
     SDL_Texture *m_pTexture;
 };

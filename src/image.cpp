@@ -1,6 +1,7 @@
 #include "image.hpp"
+#include <iostream>
 
-// Constructor
+// Constructor (default)
 Image::Image()
 {
     m_x_size = 0;
@@ -47,6 +48,7 @@ void Image::SetPixel(const int x, const int y, const double red, const double gr
 // Function to generate the display;
 void Image::Display(SDL_Renderer *renderer)
 {
+    // Alloc memory for the pixel buffer.
     Uint32 *temp_pixels = new Uint32[m_x_size * m_y_size];
 
     // Clear the pixel buffer.
@@ -73,35 +75,39 @@ void Image::Display(SDL_Renderer *renderer)
     srcRect.w = m_x_size;
     srcRect.h = m_y_size;
     bounds = srcRect;
+
+    // &srcRect is the source rectangle, &bounds is the destination rectangle.
     SDL_RenderCopy(m_pRenderer, m_pTexture, &srcRect, &bounds);
 }
 
 // Function to init the texture.
 void Image::InitTexture()
 {
-    // Create the texture.
+    // Initialise the texture.
     Uint32 rmask, gmask, bmask, amask;
 
-// On SDL documentation
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    rmask = 0xff000000;
-    gmask = 0x00ff0000;
-    bmask = 0x0000ff00;
-    amask = 0x000000ff;
-#else
     rmask = 0x000000ff;
     gmask = 0x0000ff00;
     bmask = 0x00ff0000;
     amask = 0xff000000;
+#else // little endian, like x86
+    rmask = 0xff000000;
+    gmask = 0x00ff0000;
+    bmask = 0x0000ff00;
+    amask = 0x000000ff;
 #endif
 
-    // Delete the old texture if it exists.
-    if (m_pTexture != NULL)
-    {
-        SDL_DestroyTexture(m_pTexture);
-    }
+    // Cout byte order.
+    std::cout << "Byte order: " << SDL_BYTEORDER << std::endl;
+    // Cout the big endian value.
+    std::cout << "Big endian: " << SDL_BIG_ENDIAN << std::endl;
 
-    // Create the new texture that will store the image.
+    // Delete any previously created texture before we create a new one.
+    if (m_pTexture != NULL)
+        SDL_DestroyTexture(m_pTexture);
+
+    // Create the texture that will store the image.
     SDL_Surface *tempSurface = SDL_CreateRGBSurface(0, m_x_size, m_y_size, 32, rmask, gmask, bmask, amask);
     m_pTexture = SDL_CreateTextureFromSurface(m_pRenderer, tempSurface);
     SDL_FreeSurface(tempSurface);
