@@ -70,9 +70,50 @@ int lVector<T>::GetNumDims()
 template <class T>
 T lVector<T>::GetElement(int index)
 {
-    return vectorData[index];
+    return vectorData.at(index);
 }
 
 // Overloaded operators
+template <class T>
+lVector<T> lVector<T>::operator+(const lVector<T> &rhs) const
+{
+    if (numDims != rhs.numDims)
+    {
+        throw std::invalid_argument("Vectors must have the same number of dimensions.");
+    }
+    std::vector<T> result;
+    for (int i = 0; i < numDims; i++)
+    {
+        result.push_back(vectorData[i] + rhs.vectorData[i]);
+    }
+    return lVector<T>(result);
+}
+
+template <class T>
+lVector<T> lVector<T>::operator-(const lVector<T> &rhs) const
+{
+    if (numDims != rhs.numDims)
+    {
+        throw std::invalid_argument("Vectors must have the same number of dimensions.");
+    }
+    std::vector<T> result;
+    for (int i = 0; i < numDims; i++)
+    {
+        result.push_back(vectorData[i] - rhs.vectorData[i]);
+    }
+    return lVector<T>(result);
+}
+
+template <class T>
+lVector<T> lVector<T>::operator*(const T &rhs) const
+{
+    // Scalar multiplication
+    std::vector<T> result;
+    for (int i = 0; i < numDims; i++)
+    {
+        result.push_back(vectorData[i] * rhs);
+    }
+    return lVector<T>(result);
+}
 
 #endif
