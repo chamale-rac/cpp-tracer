@@ -61,4 +61,18 @@ lVector<T>::~lVector()
     // Nothing to do here, because vectorData is a vector.
 }
 
+// Getters functions
+template <class T>
+int lVector<T>::GetNumDims()
+{
+    return numDims;
+}
+template <class T>
+T lVector<T>::GetElement(int index)
+{
+    return vectorData[index];
+}
+
+// Overloaded operators
+
 #endif
