@@ -40,4 +40,25 @@ private:
     int numDims;
 };
 
+// Default constructor
+template <class T>
+lVector<T>::lVector()
+{
+    numDims = 0;
+    vectorData = std::vector<T>();
+}
+// Constructor with vector data
+template <class T>
+lVector<T>::lVector(std::vector<T> v)
+{
+    numDims = v.size();
+    vectorData = v;
+}
+// Destructor
+template <class T>
+lVector<T>::~lVector()
+{
+    // Nothing to do here, because vectorData is a vector.
+}
+
 #endif
